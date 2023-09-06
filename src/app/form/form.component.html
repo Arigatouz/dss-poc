@@ -1,0 +1,90 @@
+<form [formGroup]="form">
+  <div formArrayName="recipients">
+    <div>
+      <div #formGroup
+           *ngFor="let recipient of recipients.controls; let recipientIndex = index;"
+           class="form-group">
+        <div [formGroupName]="recipientIndex">
+          <div (click)="toggleGroupUi(formGroup)" class="form-group__header">
+            <p class="form-group__header__title">{{recipientIndex + 1}} • Receive</p>
+            <img alt="icon" class="form-group__header__icon"
+                 height="20"
+                 ngSrc="../../assets/images/expand-less.png" width="20"/>
+          </div>
+          <div formArrayName="dataRows">
+            <div
+              class="form-group__body">
+              <div
+                *ngFor="let _ of getDataRowsControlsOfRecipient(recipient); let dataRowIndex = index"
+                [formGroupName]="dataRowIndex"
+                class="form-group__body__row">
+                <div class="form-group__body__row__input">
+                  <label for="name">Name<sup>*</sup></label>
+                  <input formControlName="name" id="name" type="text">
+                </div>
+                <div class="form-group__body__row__input">
+                  <label for="email">Email<sup>*</sup></label>
+                  <input formControlName="email" id="email" type="text">
+                </div>
+                <div class="form-group__body__row__input">
+                  <label for="role">Role</label>
+                  <select class="form-select" formControlName="role" id="role">
+                    <option selected value="review">Review document</option>
+                    <option value="sign">Sign document</option>
+                  </select>
+                </div>
+                <popper-content #dropdownMenu>
+                  <ul class="form-group__body__row__dropdown-menu">
+                    <popper-content #dropdownNested>
+                      <ul>
+                        <li
+                          *ngFor="let neighborRecipientIndex of selectedRecipientNeighbors"
+                          (click)="moveDataRowToRecipient(dataRowIndex, recipientIndex, neighborRecipientIndex)"
+                        >
+                          <p>
+                            Receive {{neighborRecipientIndex + 1}}
+                          </p>
+                          </li>
+                      </ul>
+                    </popper-content>
+                    <li [popperHideOnClickOutside]="true" [popperHideOnScroll]="true"
+                        [popperPlacement]="popperDropdownPosition"
+                        [popper]="dropdownNested"
+                        (click)="setRecipientNeighborsIndexes(recipientIndex)"
+                        class="form-group__body__row__dropdown-menu--nested"
+                        popperApplyArrowClass="popper-arrow"
+                        popperApplyClass="popper">
+                      <p>Move to...</p>
+                      <img alt="" height="10" ngSrc="assets/images/chevron-right.png" width="8">
+                    </li>
+                    <li (click)="deleteDataRowFromRecipient(dataRowIndex, recipientIndex)"
+                        class="form-group__body__row__dropdown-menu--danger">
+                      <p>Delete</p>
+                    </li>
+                  </ul>
+                </popper-content>
+                <div [popperHideOnClickOutside]="true" [popperHideOnScroll]="true"
+                     [popperPlacement]="popperDropdownPosition"
+                     [popper]="dropdownMenu"
+                     class="form-group__body__row__icon"
+                     popperApplyArrowClass="popper-arrow"
+                     popperApplyClass="popper">
+                  <img alt="" height="14" ngSrc="assets/images/menu-icon.png" width="4">
+                </div>
+              </div>
+              <div (click)="addDataRow(recipientIndex)" class="form-group__body__add">
+                <img alt="" height="20" ngSrc="assets/images/plus-icon.png" width="20">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="next-button-container">
+    <button (click)="addRecipient()" type="button">
+      <img alt="" height="13" ngSrc="assets/images/arrow-next.png" width="14">
+      Receive Next
+    </button>
+  </div>
+</form>

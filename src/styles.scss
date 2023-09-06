@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 3rem;
+  font-size: 62.5%;
+  font-family: 'Inter', sans-serif;
+}
+
+.popper {
+  background: white;
+  padding: 0 !important;
+  border: 1px solid #00000026 !important;
+  border-radius: 1px !important;
+}
+
+.popper-arrow {
+  display: none;
+}
