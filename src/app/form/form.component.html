@@ -6,12 +6,13 @@
            class="form-group">
         <div [formGroupName]="recipientIndex">
           <div (click)="toggleGroupUi(formGroup)" class="form-group__header">
-            <p class="form-group__header__title">{{recipientIndex + 1}} • Receive</p>
+            <p class="form-group__header__title">{{recipientIndex + 1}} • Receive </p>
             <img alt="icon" class="form-group__header__icon"
                  height="20"
                  ngSrc="../../assets/images/expand-less.png" width="20"/>
           </div>
           <div formArrayName="dataRows">
+            <span style="color: red; font-size: 18px; cursor: pointer" (click)="deleteRecipient(recipientIndex)">Delete receivers</span>
             <div
               class="form-group__body">
               <div
@@ -88,3 +89,7 @@
     </button>
   </div>
 </form>
+
+<pre style="font-size: 20px; margin-top: 20px">
+  {{form.value | json}}
+</pre>
