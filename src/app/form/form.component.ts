@@ -43,13 +43,13 @@ export class FormComponent implements OnInit {
 
   constructForm(): void {
     this.form = this.fb.group({
-      recipients: this.fb.array([this.constructRecipient(), this.constructRecipient(), this.constructRecipient(),])
+      recipients: this.fb.array([this.constructRecipient()])
     });
   }
 
-  constructRecipient(): FormGroup {
+  constructRecipient(isFirst:boolean =true): FormGroup {
     return this.fb.group({
-      dataRows: this.fb.array([this.constructDataRow(),])
+      dataRows: this.fb.array(isFirst ? [ this.constructDataRow()] : [])
     });
   }
 
@@ -62,7 +62,7 @@ export class FormComponent implements OnInit {
   }
 
   addRecipient(): void {
-    const recipient = this.constructRecipient();
+    const recipient = this.constructRecipient(false);
     this.recipients.push(recipient);
   }
 
